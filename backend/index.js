@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const { pool, initDb } = require("./db");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,10 +16,6 @@ app.get("/", (req, res) => {
 
 app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello from the backend" });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
 });
 
 app.post("/api/login", (req, res) => {
@@ -47,3 +44,14 @@ app.post("/api/logout", (req, res) => {
   res.clearCookie("token");
   res.json({ ok: true });
 });
+
+initDb()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Database init failed:", err);
+    process.exit(1);
+  });

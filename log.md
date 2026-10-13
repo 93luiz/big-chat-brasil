@@ -10,3 +10,8 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
 - Conversei com o Claude Code sobre as minhas ideias iniciais, o que pretendia fazer e as tecnologias que decidi usar
 - Acatei a sugestão de usar Express no projeto Node e Vite no projeto React;
 - Usei o claude para criar a estrutura inicial dos projetos e de docker
+
+## 13 de Outubro
+
+- Adicionei o container do postgres e conectei com o backend
+- Irei fazer a API validar o login apenas conferindo o documento, sem senha por enquanto
