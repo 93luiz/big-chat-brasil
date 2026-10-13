@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const { pool, initDb } = require("./db");
 
 const app = express();
@@ -20,19 +21,27 @@ app.get("/api/hello", (req, res) => {
 
 app.post("/api/login", async (req, res) => {
   try {
-    const { document, document_type } = req.body;
+    const { document, document_type, password } = req.body;
+
+    if (!document || !document_type || !password) {
+      return res.status(400).json({ error: "document, document_type and password are required" });
+    }
+
+    const cleanDocument = String(document).replace(/\D/g, "");
+
     const { rows } = await pool.query(
-      "SELECT id, document, document_type, created_at FROM users WHERE document_type = $1 AND document = $2",
+      "SELECT id, password_hash, document, document_type, created_at FROM users WHERE document_type = $1 AND document = $2",
       [document_type, document]
     );
 
-    if (rows.length === 0) {
-      return res.status(404).json({ error: "User not found" });
+    const user = rows[0];
+    const valid = user && (await bcrypt.compare(password, user.password_hash));
+
+    if (!valid) {
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    console.log(rows);
-    const user = rows[0];
-
+    delete user.password_hash;
     const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "7d" });
 
     res.cookie("token", token, {
@@ -43,6 +52,33 @@ app.post("/api/login", async (req, res) => {
     });
     res.json({ ok: true });
   } catch (err) {
+    if (err.code === "22P02") return res.status(400).json({ error: "Invalid document type" });
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/api/user", async (req, res) => {
+  const { document, document_type, password } = req.body;
+
+  if (!document || !document_type || !password) {
+    return res.status(400).json({ error: "document, document_type and password are required" });
+  }
+
+  const cleanDocument = String(document).replace(/\D/g, "");
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  try {
+    const { rows } = await pool.query(
+      `INSERT INTO users (document, document_type, password_hash)
+       VALUES ($1, $2, $3)
+       RETURNING id, document, document_type`,
+      [cleanDocument, document_type, passwordHash]
+    );
+    res.status(201).json(rows[0]);
+  } catch (err) {
+    if (err.code === "23505") return res.status(409).json({ error: "This document already exists" });
+    if (err.code === "22P02") return res.status(400).json({ error: "document_type must be 'cpf' or 'cnpj'" });
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
   }

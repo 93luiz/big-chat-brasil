@@ -14,6 +14,7 @@ async function initDb() {
       id SERIAL PRIMARY KEY,
       document TEXT NOT NULL,
       document_type doc_type NOT NULL,
+      password_hash TEXT NOT NULL,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       UNIQUE (document, document_type)
     );
