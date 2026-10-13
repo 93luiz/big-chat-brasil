@@ -1,4 +1,9 @@
+import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Layout from "./components/Layout.jsx";
+import Home from "./pages/Home.jsx";
+import Conversations from "./pages/Conversations.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
   const [message, setMessage] = useState("Loading...");
@@ -11,9 +16,12 @@ export default function App() {
   }, []);
 
   return (
-    <main style={{ fontFamily: "sans-serif", padding: "2rem" }}>
-      <h1>My App</h1>
-      <p>{message}</p>
-    </main>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/conversations" element={<Conversations />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }
