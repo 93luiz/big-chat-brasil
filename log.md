@@ -15,3 +15,5 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
 
 - Adicionei o container do postgres e conectei com o backend
 - Irei fazer a API validar o login apenas conferindo o documento, sem senha por enquanto
+- TODO: Adicionar coluna de senha e validar a mesma no login
+- TODO: Adicionar limitação no tamanho do CPF ou CNPJ
