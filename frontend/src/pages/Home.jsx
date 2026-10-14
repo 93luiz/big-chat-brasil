@@ -1,14 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider.jsx";
 
 export default function Home() {
-  const [message, setMessage] = useState("Loading...");
+  const { user, login } = useAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("/api/hello")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch(() => setMessage("Could not reach the API"));
-  }, []);
+  const [form, setForm] = useState({ document: "", document_type: "cpf", password: "" });
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitting:", form);
+    setError("");
+    setSubmitting(true);
+
+    try {
+      await login(form);
+      navigate("/conversations");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (user) {
+    return <Navigate to="/conversations" replace />;
+  }
 
   return (
     <>
@@ -20,28 +44,33 @@ export default function Home() {
                     Login
                 </div>
                 <div className="card-body">
-                    <form>
+                    <form onSubmit={handleSubmit}>
+                        {error && <div className="alert alert-danger pb-3">{error}</div>}
                         <p className="form-label mb-1">Documento</p>
                         <div className="row mb-3">
                             <div className="col-auto">
                                 <div class="form-field">
-                                    <input class="radio" name="document_type" type="radio" id="cpf" />
+                                    <input class="radio" name="document_type" type="radio" id="cpf" value="cpf" checked={form.document_type === "cpf"} onChange={handleChange} />
                                     <label for="cpf">CPF</label>
                                 </div>
                             </div>
                             <div className="col-auto">
                                 <div class="form-field">
-                                    <input class="radio" name="document_type" type="radio" id="cnpj" />
+                                    <input class="radio" name="document_type" type="radio" id="cnpj" value="cnpj" checked={form.document_type === "cnpj"} onChange={handleChange}  />
                                     <label for="cnpj">CNPJ</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-field mb-3">
                             <label for="document" class="form-label">Número do documento</label>
-                            <input type="text" class="form-control" id="document" />
+                            <input type="text" class="form-control" name="document" id="document" value={form.document} onChange={handleChange}  />
+                        </div>
+                        <div class="form-field mb-3">
+                            <label for="password" class="form-label">Senha</label>
+                            <input type="password" class="form-control" name="password" id="password" value={form.password} onChange={handleChange} />
                         </div>
                         <div class="form-field">
-                            <input type="submit" value="Entrar" className="btn btn-primary w-100" />
+                            <input type="submit" value={submitting ? "Signing in..." : "Sign in"} className="btn btn-primary w-100" disabled={submitting} />
                         </div>
                     </form>
                 </div>

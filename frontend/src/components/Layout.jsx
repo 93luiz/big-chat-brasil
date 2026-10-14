@@ -1,18 +1,27 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider.jsx";
 
 export default function Layout() {
-  return (
-    <div className="d-flex flex-column vh-100">
-      <nav className="navbar navbar-expand navbar-dark bg-dark px-3">
-        <span className="navbar-brand">BCB</span>
-        <div className="navbar-nav">
-          <NavLink to="/" end className="nav-link">Home</NavLink>
-        </div>
-      </nav>
+    const { user, loading, logout } = useAuth();
+    const navigate = useNavigate();
 
-      <main className="container flex-fill">
-        <Outlet />
-      </main>
-    </div>
-  );
+    const handleLogout = async () => {
+        await logout();
+        navigate("/login");
+    };
+    return (
+        <div className="d-flex flex-column vh-100">
+        <nav className="navbar navbar-expand navbar-dark bg-dark px-3 d">
+            <span className="navbar-brand">BCB</span>
+            <div className="navbar-nav d-flex">
+                {user && <NavLink to="/conversations" className="nav-link">Conversations</NavLink>}
+                {user && <button onClick={handleLogout} className="btn btn-outline-light btn-sm ms-auto">Logout</button>}
+            </div>
+        </nav>
+
+        <main className="container flex-fill">
+            <Outlet />
+        </main>
+        </div>
+    );
 }
