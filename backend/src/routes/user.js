@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const repository = require("../repositories/user");
 const { pool } = require("../db");
 const { requireAuth } = require("../middleware/auth");
 
@@ -18,13 +19,12 @@ router.post("/", async (req, res) => {
   const passwordHash = await bcrypt.hash(password, 10);
 
   try {
-    const { rows } = await pool.query(
-      `INSERT INTO users (document, document_type, password_hash)
-       VALUES ($1, $2, $3)
-       RETURNING id, document, document_type`,
-      [cleanDocument, document_type, passwordHash]
-    );
-    res.status(201).json(rows[0]);
+    const user = await repository.create({
+      document: cleanDocument,
+      documentType: document_type,
+      passwordHash: passwordHash,
+    });
+    res.status(201).json(user);
   } catch (err) {
     if (err.code === "23505") return res.status(409).json({ error: "This document already exists" });
     if (err.code === "22P02") return res.status(400).json({ error: "document_type must be 'cpf' or 'cnpj'" });

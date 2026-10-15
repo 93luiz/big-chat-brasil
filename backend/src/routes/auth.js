@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { pool } = require('../db');
+const repository = require("../repositories/user");
 const { requireAuth } = require("../middleware/auth");
 
 const router = express.Router();
@@ -16,12 +16,8 @@ router.post("/login", async (req, res) => {
 
     const cleanDocument = String(document).replace(/\D/g, "");
 
-    const { rows } = await pool.query(
-      "SELECT id, password_hash, document, document_type, created_at FROM users WHERE document_type = $1 AND document = $2",
-      [document_type, document]
-    );
+    const user = await repository.findCredentials(cleanDocument, document_type);
 
-    const user = rows[0];
     const valid = user && (await bcrypt.compare(password, user.password_hash));
 
     if (!valid) {
