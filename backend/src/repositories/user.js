@@ -1,5 +1,13 @@
 const { pool } = require("../db");
 
+async function find(id) {
+  const { rows } = await pool.query(
+    "SELECT id, document, document_type FROM users WHERE id = $1",
+    [id]
+  );
+  return rows[0] || null;
+}
+
 async function findByDocument(document, documentType) {
   const { rows } = await pool.query(
     "SELECT id, document, document_type FROM users WHERE document = $1 AND document_type = $2",
