@@ -34,3 +34,14 @@ async function create({ document, documentType, passwordHash }) {
   );
   return rows[0];
 }
+
+async function createIfMissing({ document, documentType, passwordHash }) {
+  await pool.query(
+    `INSERT INTO users (document, document_type, password_hash)
+     VALUES ($1, $2, $3)
+     ON CONFLICT (document, document_type) DO NOTHING`,
+    [document, documentType, passwordHash]
+  );
+}
+
+module.exports = { find, findByDocument, findCredentials, create, createIfMissing };

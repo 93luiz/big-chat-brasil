@@ -1,15 +1,18 @@
+const { seedUsers } = require('./seed');
 const app = require('./src/app');
 const { initDb } = require("./src/db");
 
 const PORT = process.env.PORT || 3000;
 
-initDb()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server listening on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Database init failed:", err);
-    process.exit(1);
-  });
+async function start() {
+  await initDb();
+
+  await seedUsers();
+
+  app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+}
+
+start().catch((err) => {
+  console.error("Startup failed:", err);
+  process.exit(1);
+});
