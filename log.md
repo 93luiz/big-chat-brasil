@@ -18,3 +18,13 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
 - ✅ ~TODO: Adicionar coluna de senha e validar a mesma no login~ Feito
 - TODO: Adicionar limitação no tamanho do CPF ou CNPJ
 - Adicionei validação com senha e criação de usuário na API
+
+# 14 de Outubro
+
+- Criei as tabelas iniciais no banco para suportar conversas mensagens
+- TODO: Adicionar script SQL a ser executado ao criar o container para popular algumas tabelas
+
+## 15 de Outubro
+
+- Decidi reestruturar a API em alguns arquivos e melhorar a estrutura do projeto
+- Aprendi com o Claude uma forma de transformar a exigência de login num midleware reutilizável
