@@ -7,11 +7,13 @@ const router = express.Router();
 
 router.use(requireAuth);
 
-router.get('find/:idReciever', async (req, res) => {
-    const idReciever = req.params.idReciever;
-    const reciever = userRepository.find(idReciever);
+router.get('/find/:idReceiver', async (req, res) => {
+    const { idReceiver } = req.params;
+    const reciever = await userRepository.find(idReceiver);
 
-    const conversation = repository.getConversation(req.user, reciever);
+    const conversation = await repository.getConversation(req.user, reciever);
 
     return res.json(conversation);
 });
+
+module.exports = router;

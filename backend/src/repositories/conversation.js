@@ -1,4 +1,4 @@
-const { pool } = require("../db");
+const { pool, withTransaction } = require("../db");
 
 async function getConversation(sender, reciever) {
     var { rows } = await pool.query(
@@ -10,7 +10,8 @@ async function getConversation(sender, reciever) {
 
     if (rows[0]) {
         const conversation_user = rows[0];
-        conversation_user.conversation = find(conversation_user.conversation_id);
+        const conversation = await find(conversation_user.conversation_id);
+        conversation_user.conversation = conversation;
         return conversation_user;
     }
 
@@ -24,32 +25,39 @@ async function find(id) {
         WHERE id = $1`,
         [id]
     );
+    return rows[0];
 }
 
 async function create(sender, reciever) {
-    var { rows } = await pool.query(
-        `INSERT INTO conversation (last_message)
-        VALUES (NULL)
-        RETURNING id, last_message, created_at`
-    );
-    const conversation = rows[0];
-    
-    var { rows } = await pool.query(
-        `INSERT INTO conversation_user (conversation_id, user_id, reciever_user_id)
-        VALUES ($1, $2, $3)
-        RETURNING id, conversation_id, user_id, reciever_user_id`,
-        [conversation.id, sender.id, reciever.id]
-    );
-    const senderConversation = rows[0];
+    const conversation = await withTransaction(async (client) => {
+        var { rows } = await client.query(
+            `INSERT INTO conversation (last_message)
+            VALUES (NULL)
+            RETURNING id, last_message, created_at`
+        );
+        const conversation = rows[0];
 
-    var { rows } = await pool.query(
-        `INSERT INTO conversation_user (conversation_id, user_id, reciever_user_id)
-        VALUES ($1, $2, $3)
-        RETURNING id, conversation_id, user_id, reciever_user_id`,
-        [conversation.id, reciever.id, sender.id]
-    );
-    const recieverConversation = rows[0];
+        var { rows } = await client.query(
+            `INSERT INTO conversation_user (conversation_id, user_id, reciever_user_id)
+            VALUES ($1, $2, $3)
+            RETURNING id, conversation_id, user_id, reciever_user_id`,
+            [conversation.id, sender.id, reciever.id]
+        );
+        const senderConversation = rows[0];
 
-    senderConversation.conversation = conversation;
-    return senderConversation;
+        var { rows } = await client.query(
+            `INSERT INTO conversation_user (conversation_id, user_id, reciever_user_id)
+            VALUES ($1, $2, $3)
+            RETURNING id, conversation_id, user_id, reciever_user_id`,
+            [conversation.id, reciever.id, sender.id]
+        );
+        const recieverConversation = rows[0];
+
+        senderConversation.conversation = conversation;
+        return senderConversation;
+    });
+
+    return conversation;
 }
+
+module.exports = { getConversation, find };
