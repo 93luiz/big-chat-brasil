@@ -28,3 +28,4 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
 
 - Decidi reestruturar a API em alguns arquivos e melhorar a estrutura do projeto
 - Aprendi com o Claude uma forma de transformar a exigência de login num midleware reutilizável
+- Aprimorei a estrutura do backend com arquivos separados do index.js e uma estrutura de pastas separando a responsabilidade de cada arquivo
