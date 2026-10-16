@@ -73,6 +73,12 @@ async function create(sender, reciever) {
         );
         const recieverConversation = rows[0];
 
+        await client.query(
+            `INSERT INTO message (conversation_id, user_id, type, text)
+            VALUES ($1, $2, $3, $4)`,
+            [conversation.id, sender.id, 'system', 'Conversa criada']
+        );
+
         senderConversation.conversation = conversation;
         return senderConversation;
     });
