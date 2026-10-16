@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
+import ConversationList from "../components/conversation_list";
 
 export default function Conversations() {
-  const [message, setMessage] = useState("Loading...");
-
-  useEffect(() => {
-    fetch("/api/hello")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch(() => setMessage("Could not reach the API"));
-  }, []);
-
   return (
-    <main style={{ fontFamily: "sans-serif", padding: "2rem" }}>
-      <h1>Conversations</h1>
-      <p>{message}</p>
+    <main className="container-fluid h-100">
+      <div className="row h-100 ">
+        <div className="col-12 col-md-5 col-lg-4 col-xl-3 overflow-y-scroll">
+          <ConversationList />
+        </div>
+        <div className="d-none d-md-block col-md-7 col-lg-8 col-xl-9 bg-body-secondary">
+          Conversation
+        </div>
+      </div>
     </main>
   );
 }

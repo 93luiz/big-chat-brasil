@@ -10,7 +10,7 @@ router.use(requireAuth);
 router.get('/', async(req, res) => {
     const conversations = await repository.all(req.user);
 
-    return res.json(conversations);
+    return res.json({ data: conversations });
 });
 
 router.get('/find/:idReceiver', async (req, res) => {
@@ -19,7 +19,7 @@ router.get('/find/:idReceiver', async (req, res) => {
 
     const conversation = await repository.getConversation(req.user, reciever);
 
-    return res.json(conversation);
+    return res.json({ data: conversation });
 });
 
 module.exports = router;

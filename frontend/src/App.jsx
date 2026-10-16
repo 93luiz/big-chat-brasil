@@ -9,13 +9,6 @@ import ProtectedRoute from "./auth/ProtectedRoute.jsx";
 export default function App() {
   const [message, setMessage] = useState("Loading...");
 
-  useEffect(() => {
-    fetch("/api/hello")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch(() => setMessage("Could not reach the API"));
-  }, []);
-
   return (
     <Routes>
       <Route element={<Layout />}>

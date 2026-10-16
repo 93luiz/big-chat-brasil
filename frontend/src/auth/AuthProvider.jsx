@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
 
   // Restore the session when the app loads
   useEffect(() => {
-    fetch("/api/me")
+    fetch("/api/auth/me")
       .then((res) => (res.ok ? res.json() : null))
       .then(setUser)
       .finally(() => setLoading(false));
@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
 
   const login = async (credentials) => {
     console.log(credentials);
-    const res = await fetch("/api/login", {
+    const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
@@ -27,12 +27,12 @@ export function AuthProvider({ children }) {
       throw new Error(data.error || "Login failed");
     }
 
-    const me = await fetch("/api/me").then((r) => r.json());
+    const me = await fetch("/api/auth/me").then((r) => r.json());
     setUser(me);
   };
 
   const logout = async () => {
-    await fetch("/api/logout", { method: "POST" });
+    await fetch("/api/auth/logout", { method: "POST" });
     setUser(null);
   };
 
