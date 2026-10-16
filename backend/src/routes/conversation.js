@@ -7,6 +7,12 @@ const router = express.Router();
 
 router.use(requireAuth);
 
+router.get('/', async(req, res) => {
+    const conversations = await repository.all(req.user);
+
+    return res.json(conversations);
+});
+
 router.get('/find/:idReceiver', async (req, res) => {
     const { idReceiver } = req.params;
     const reciever = await userRepository.find(idReceiver);

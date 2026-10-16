@@ -18,14 +18,34 @@ async function getConversation(sender, reciever) {
     return create(sender, reciever);
 }
 
-async function find(id) {
+async function find(id, user) {
+    if (!user || !user.id) {
+        return null;
+    } 
     const { rows } = await pool.query(
-        `SELECT id, last_message, created_at
-        FROM conversation
-        WHERE id = $1`,
-        [id]
+        `SELECT c.id, c.last_message, c.created_at
+        FROM conversation c
+        INNER JOIN conversation_user u ON c.id = u.conversation_id
+        WHERE c.id = $1 AND u.id = $2`,
+        [id, user.id]
     );
     return rows[0];
+}
+
+async function all(user) {
+    if (!user || !user.id) {
+        return [];
+    }
+
+    const { rows } = await pool.query(
+        `SELECT c.id, c.last_message, c.created_at, r.name AS title
+        FROM conversation c
+        INNER JOIN conversation_user u ON c.id = u.conversation_id
+        INNER JOIN users r ON r.id = u.reciever_user_id
+        WHERE u.user_id = $1`,
+        [user.id]
+    );
+    return rows;
 }
 
 async function create(sender, reciever) {
@@ -60,4 +80,4 @@ async function create(sender, reciever) {
     return conversation;
 }
 
-module.exports = { getConversation, find };
+module.exports = { getConversation, find, all };

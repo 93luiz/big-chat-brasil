@@ -18,6 +18,7 @@ async function initDb() {
 
     CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
         document TEXT NOT NULL,
         document_type doc_type NOT NULL,
         password_hash TEXT NOT NULL,
