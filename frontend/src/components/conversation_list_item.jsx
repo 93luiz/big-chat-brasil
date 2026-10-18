@@ -1,6 +1,7 @@
-export default function ConversationListItem({ conversation }) {
+import { Link } from "react-router-dom";
+export default function ConversationListItem({ conversation, active }) {
     return (
-        <li key={conversation.id} className="list-group-item">
+        <Link key={conversation.id} to={`/conversations/${conversation.id}`} className={`list-group-item ${active ? 'active' : ''}`}>
             <div className="d-flex">
                 <div>
                     {conversation.title}
@@ -12,6 +13,6 @@ export default function ConversationListItem({ conversation }) {
             <p>
                 {conversation.lastMessage ? <small>{conversation.lastMessage}</small> : null}
             </p>
-        </li>
+        </Link>
     );
 }
