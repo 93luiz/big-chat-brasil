@@ -55,4 +55,11 @@ router.get('/:id/message', async (req, res) => {
     res.json({ data: messages });
 });
 
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    const conversation = await repository.find(id, req.user);
+
+    res.json(conversation);
+});
+
 module.exports = router;

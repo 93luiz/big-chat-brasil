@@ -23,9 +23,10 @@ async function find(id, user) {
         return null;
     } 
     const { rows } = await pool.query(
-        `SELECT c.id, c.last_message, c.created_at
+        `SELECT c.id, c.last_message, c.created_at, r.name AS title
         FROM conversation c
         INNER JOIN conversation_user u ON c.id = u.conversation_id
+        INNER JOIN users r ON r.id = u.reciever_user_id
         WHERE c.id = $1 AND u.id = $2`,
         [id, user.id]
     );

@@ -49,27 +49,27 @@ export default function Home() {
                         <p className="form-label mb-1">Documento</p>
                         <div className="row mb-3">
                             <div className="col-auto">
-                                <div class="form-field">
-                                    <input class="radio" name="document_type" type="radio" id="cpf" value="cpf" checked={form.document_type === "cpf"} onChange={handleChange} />
+                                <div className="form-field">
+                                    <input className="radio" name="document_type" type="radio" id="cpf" value="cpf" checked={form.document_type === "cpf"} onChange={handleChange} />
                                     <label for="cpf">CPF</label>
                                 </div>
                             </div>
                             <div className="col-auto">
-                                <div class="form-field">
-                                    <input class="radio" name="document_type" type="radio" id="cnpj" value="cnpj" checked={form.document_type === "cnpj"} onChange={handleChange}  />
+                                <div className="form-field">
+                                    <input className="radio" name="document_type" type="radio" id="cnpj" value="cnpj" checked={form.document_type === "cnpj"} onChange={handleChange}  />
                                     <label for="cnpj">CNPJ</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-field mb-3">
-                            <label for="document" class="form-label">Número do documento</label>
-                            <input type="text" class="form-control" name="document" id="document" value={form.document} onChange={handleChange}  />
+                        <div className="form-field mb-3">
+                            <label for="document" className="form-label">Número do documento</label>
+                            <input type="text" className="form-control" name="document" id="document" value={form.document} onChange={handleChange}  />
                         </div>
-                        <div class="form-field mb-3">
-                            <label for="password" class="form-label">Senha</label>
-                            <input type="password" class="form-control" name="password" id="password" value={form.password} onChange={handleChange} />
+                        <div className="form-field mb-3">
+                            <label for="password" className="form-label">Senha</label>
+                            <input type="password" className="form-control" name="password" id="password" value={form.password} onChange={handleChange} />
                         </div>
-                        <div class="form-field">
+                        <div className="form-field">
                             <input type="submit" value={submitting ? "Signing in..." : "Sign in"} className="btn btn-primary w-100" disabled={submitting} />
                         </div>
                     </form>

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 export default function ConversationList() {
     const [conversations, setConversations] = useState([]);
-    const [loading, setLoading] = useState(true);
     const { id } = useParams();
 
     useEffect(() => {
@@ -12,14 +11,12 @@ export default function ConversationList() {
             .then((res) => res.json())
             .then((data) => setConversations(data.data))
             .catch(() => setConversations(null))
-            .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <p>Loading...</p>;
     if (conversations.length === 0) return <p>Nenhuma conversa encontrada</p>;
 
     return (
-        <div className="list-group">
+        <div className="list-group px-2 pt-2">
             {conversations.map((conversation) => (
                 <ConversationListItem key={conversation.id} conversation={conversation} active={id == conversation.id} />
             ))}
