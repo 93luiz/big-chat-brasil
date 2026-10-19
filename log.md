@@ -39,3 +39,9 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
 
 - TODO: Colocar coluna de última atualização da conversa
 - TODO: Atualizar a última mensagem da conversa
+
+# 19 de Outubro
+
+- Melhorias que poderiam ser feitas em próximos passos:
+    - Usar data models para padronizar a manipulação dos dados
+    - Encontrar uma solução mais robusta para comunicar com o banco e aposentar a escrita manual de SQL

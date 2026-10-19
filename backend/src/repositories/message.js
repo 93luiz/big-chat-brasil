@@ -22,7 +22,8 @@ async function fromConversation(conversation) {
     const { rows } = await pool.query(
         `SELECT m.id, m.conversation_id, m.user_id, m.type, m.text
         FROM message m
-        WHERE m.conversation_id = $1`,
+        WHERE m.conversation_id = $1
+        ORDER BY m.created_at, m.id`,
         [conversation.id]
     );
 

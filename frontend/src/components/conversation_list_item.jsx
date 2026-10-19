@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-export default function ConversationListItem({ conversation, active, onConversationSelected }) {
+export default function ConversationListItem({ conversation, active }) {
     return (
         <Link 
             key={conversation.id}
             to={`/conversations/${conversation.id}`}
             className={`list-group-item ${active ? 'active' : ''}`}
-            onClick={onConversationSelected}
         >
             <div className="d-flex">
                 <div>
@@ -16,7 +15,7 @@ export default function ConversationListItem({ conversation, active, onConversat
                 </small>
             </div>
             <p>
-                {conversation.lastMessage ? <small>{conversation.lastMessage}</small> : null}
+                {conversation.last_message ? <small>{conversation.last_message}</small> : null}
             </p>
         </Link>
     );

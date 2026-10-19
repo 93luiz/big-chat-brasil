@@ -27,7 +27,7 @@ async function find(id, user) {
         FROM conversation c
         INNER JOIN conversation_user u ON c.id = u.conversation_id
         INNER JOIN users r ON r.id = u.reciever_user_id
-        WHERE c.id = $1 AND u.id = $2`,
+        WHERE c.id = $1 AND u.user_id = $2`,
         [id, user.id]
     );
     return rows[0];

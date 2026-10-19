@@ -32,7 +32,7 @@ router.post('/:id/message', async (req, res) => {
         return res.status(404).json({ error: 'Conversation not found' });
     }
 
-    const message = messageRepository.create({
+    const message = await messageRepository.create({
         sender: req.user,
         conversation: conversation,
         type: 'text',
@@ -46,9 +46,7 @@ router.get('/:id/message', async (req, res) => {
     const { id } = req.params;
     const conversation = await repository.find(id, req.user);
 
-    if (!conversation) {
-        return res.status(404).json({ error: 'Conversation not found' });
-    }
+    if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
 
     const messages = await messageRepository.fromConversation(conversation);
 
@@ -58,6 +56,8 @@ router.get('/:id/message', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const conversation = await repository.find(id, req.user);
+
+    if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
 
     res.json(conversation);
 });

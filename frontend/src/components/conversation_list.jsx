@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ConversationListItem from "./conversation_list_item";
 import { useParams } from "react-router-dom";
 
-export default function ConversationList({ onConversationSelected }) {
+export default function ConversationList() {
     const [conversations, setConversations] = useState([]);
     const { id } = useParams();
 
@@ -10,7 +10,7 @@ export default function ConversationList({ onConversationSelected }) {
         fetch("/api/conversation")
             .then((res) => res.json())
             .then((data) => setConversations(data.data))
-            .catch(() => setConversations(null))
+            .catch(() => setConversations([]));
     }, []);
 
     if (conversations.length === 0) return <p>Nenhuma conversa encontrada</p>;
@@ -22,7 +22,6 @@ export default function ConversationList({ onConversationSelected }) {
                     key={conversation.id}
                     conversation={conversation}
                     active={id == conversation.id}
-                    onConversationSelected={onConversationSelected}
                 />
             ))}
         </div>
