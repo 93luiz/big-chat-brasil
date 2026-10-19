@@ -34,14 +34,22 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
 ## 16 de Outubro
 
 - API de listagem de conversas
+- Tela responsiva entre lista de conversas e mensagens da conversa
+- Carregando conversas no front
 
 ## 18 de Outubro
 
-- TODO: Colocar coluna de última atualização da conversa
-- TODO: Atualizar a última mensagem da conversa
+- Tela de conversa das mensagens
+- Mensagens com visual de balão
+- Campo de envio de mensagens
+- ✅ ~TODO: Colocar coluna de última atualização da conversa~
+- ✅ ~TODO: Atualizar a última mensagem da conversa~
 
 # 19 de Outubro
 
+- Correções de bugs
+- Ajustes visuais em mensagens
+- Data e horário das mensagens
 - Melhorias que poderiam ser feitas em próximos passos:
     - Usar data models para padronizar a manipulação dos dados
     - Encontrar uma solução mais robusta para comunicar com o banco e aposentar a escrita manual de SQL
