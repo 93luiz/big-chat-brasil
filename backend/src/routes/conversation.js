@@ -16,9 +16,9 @@ router.get('/', async(req, res) => {
 
 router.get('/find/:idReceiver', async (req, res) => {
     const { idReceiver } = req.params;
-    const reciever = await userRepository.find(idReceiver);
+    const receiver = await userRepository.find(idReceiver);
 
-    const conversation = await repository.getConversation(req.user, reciever);
+    const conversation = await repository.getConversation(req.user, receiver);
 
     return res.json({ data: conversation });
 });

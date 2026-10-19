@@ -5,8 +5,6 @@ const { requireAuth } = require("../middleware/auth");
 
 const router = express.Router();
 
-router.use(requireAuth);
-
 router.post("/", async (req, res) => {
   const { name, document, document_type, password } = req.body;
 

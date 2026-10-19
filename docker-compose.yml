@@ -8,7 +8,7 @@ services:
       - /app/node_modules
     environment:
       - PORT=3000
-      - JWT_SECRET=${JWT_SECRET:dev-only-default-secret}
+      - JWT_SECRET=${JWT_SECRET:-dev-only-default-secret}
       - DATABASE_URL=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-bcb}
     depends_on:
       db:

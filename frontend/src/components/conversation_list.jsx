@@ -9,7 +9,7 @@ export default function ConversationList() {
     useEffect(() => {
         fetch("/api/conversation")
             .then((res) => res.json())
-            .then((data) => setConversations(data.data))
+            .then((data) => setConversations(data.data ?? []))
             .catch(() => setConversations([]));
     }, []);
 

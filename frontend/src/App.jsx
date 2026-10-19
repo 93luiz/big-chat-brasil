@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Layout from "./components/Layout.jsx";
 import Home from "./pages/Home.jsx";
 import Conversations from "./pages/Conversations.jsx";
@@ -8,8 +7,6 @@ import ProtectedRoute from "./auth/ProtectedRoute.jsx";
 import Conversation from "./pages/Conversation.jsx";
 
 export default function App() {
-  const [message, setMessage] = useState("Loading...");
-
   return (
     <Routes>
       <Route element={<Layout />}>

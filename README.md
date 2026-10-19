@@ -31,20 +31,27 @@ $ docker compose up
 
 Os containeres serão criados e os dados iniciais serão populados no banco.
 
+Os serviços ficarão disponíveis por padrão nas seguintes urls:
+
+```
+http://localhost:5173 // frontend
+http://localhost:3000 // backend
+```
+
 ### Usuários de teste
 
 Utilize as seguintes credenciais para logar:
 
 1. **João da Silva**: CPF: 12345678909 | Senha: dev12345
 2. **Maria Fernandes**: CPF: 98765432100 | Senha: dev12345
-1. **Solusoft**: CNPJ: 11222333000181 | Senha: dev12345
+3. **Solusoft**: CNPJ: 11222333000181 | Senha: dev12345
 
 ### Usuários adicionais
 
-Caso deseje adicionar mais usuários para testar, o sistem possui API para criação de usuários, porém não possui interface para tal, de qualquer forma, é possível fazer o cadastro pela seguinte URL:
+Caso deseje adicionar mais usuários para testar, o sistema possui API para criação de usuários, porém não possui interface para tal, de qualquer forma, é possível fazer o cadastro pela seguinte URL:
 
 ```
-POST /api/user
+POST /api/users
 ```
 
 O corpo da requisição deve ser em formato JSON com os seguintes dados:
@@ -56,4 +63,12 @@ O corpo da requisição deve ser em formato JSON com os seguintes dados:
     "document_type": "cpf", // [cpf,cnpj]
     "password": "dev12345"
 }
+```
+
+### Resetar o banco de dados
+
+Para resetar o banco de dados, derrube os containeres deletando os mesmos e seus volumes com o comando:
+
+```bash
+$ docker compose down -v
 ```

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import ConversationList from "../components/conversation_list";
 
 export default function Conversations() {

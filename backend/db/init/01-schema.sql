@@ -23,14 +23,14 @@ CREATE TABLE conversation_user (
     id SERIAL PRIMARY KEY,
     conversation_id INTEGER REFERENCES conversation(id) NOT NULL,
     user_id INTEGER NOT NULL,
-    reciever_user_id INTEGER NOT NULL,
+    receiver_user_id INTEGER NOT NULL,
 
     CONSTRAINT fk_user_id
         FOREIGN KEY (user_id)
         REFERENCES users(id),
 
-    CONSTRAINT fk_reciever_user_id
-        FOREIGN KEY (reciever_user_id)
+    CONSTRAINT fk_receiver_user_id
+        FOREIGN KEY (receiver_user_id)
         REFERENCES users(id)
 
 );

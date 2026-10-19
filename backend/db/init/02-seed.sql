@@ -21,7 +21,7 @@ BEGIN
   VALUES ('Tá ótimo, até amanhã!', NOW() - INTERVAL '3 hours', NOW() - INTERVAL '1 hour')
   RETURNING id INTO conv1;
 
-  INSERT INTO conversation_user (conversation_id, user_id, reciever_user_id)
+  INSERT INTO conversation_user (conversation_id, user_id, receiver_user_id)
   VALUES (conv1, joao, maria), (conv1, maria, joao);
 
   INSERT INTO message (conversation_id, user_id, type, text, created_at) VALUES
@@ -35,7 +35,7 @@ BEGIN
   VALUES ('Obrigado', NOW() - INTERVAL '1 hour', NOW() - INTERVAL '30 minutes')
   RETURNING id INTO conv2;
 
-  INSERT INTO conversation_user (conversation_id, user_id, reciever_user_id)
+  INSERT INTO conversation_user (conversation_id, user_id, receiver_user_id)
   VALUES (conv2, joao, solusoft), (conv2, solusoft, joao);
 
   INSERT INTO message (conversation_id, user_id, type, text, created_at) VALUES

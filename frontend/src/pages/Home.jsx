@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <>
       <div className="d-flex flex-column h-100 py-4">
-        <h1>Welcome</h1>
+        <h1>Big Chat Brasil</h1>
         <div className="align-self-center flex-fill d-flex align-items-center" style={{ maxWidth: '400px' }}>
             <div className="card">
                 <div className="card-header">
@@ -70,7 +70,7 @@ export default function Home() {
                             <input type="password" className="form-control" name="password" id="password" value={form.password} onChange={handleChange} />
                         </div>
                         <div className="form-field">
-                            <input type="submit" value={submitting ? "Signing in..." : "Sign in"} className="btn btn-primary w-100" disabled={submitting} />
+                            <input type="submit" value={submitting ? "Entrando..." : "Entrar"} className="btn btn-primary w-100" disabled={submitting} />
                         </div>
                     </form>
                 </div>

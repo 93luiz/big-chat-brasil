@@ -54,3 +54,5 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
     - Usar data models para padronizar a manipulação dos dados
     - Encontrar uma solução mais robusta para comunicar com o banco e aposentar a escrita manual de SQL
     - Adicionar uma variável de ambiente para definir se está rodando em produção ou dev, e limitar algumas práticas inseguras (como o JWTSECRET padrão)
+    - Na versão desktop do site, a lista de conversas não atualiza automaticamente com novas mensagens, encontrar uma solução para isso
+    - O sistema já está preparado para iniciar conversas automaticamente, só está faltando uma tela de contatos para fazer essa ação
