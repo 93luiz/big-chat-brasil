@@ -19,19 +19,25 @@ export default function Conversation() {
           })
           .catch(() => setMessages(null));
   };
+  useEffect(updateMessages, [id]);
 
-  useEffect(updateMessages, []);
-  useEffect(() => {
+  const updateConversation = () => {
     fetch(`/api/conversation/${id}`)
       .then((res) => res.json())
       .then((data) => setConversation(data));
-  }, []);
+  };
+  useEffect(updateConversation, [id]);
+
+  const onConversationSelected = () => {
+    updateMessages();
+    updateConversation();
+  };
 
   return (
     <main className="container-fluid h-100 p-0">
       <div className="row h-100 g-0">
         <div className="d-none d-md-block col-md-5 col-lg-4 col-xl-3 overflow-y-scroll">
-          <ConversationList />
+          <ConversationList onConversationSelected={onConversationSelected} />
         </div>
         <div className="col-12 col-md-7 col-lg-8 col-xl-9 d-flex flex-column border-start">
           <nav className="navbar bg-body-tertiary">

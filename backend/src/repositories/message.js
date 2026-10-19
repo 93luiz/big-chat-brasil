@@ -10,7 +10,7 @@ async function create({ sender, conversation, type, text }) {
 
     await pool.query(
         `UPDATE conversation
-        SET last_message = $1
+        SET last_message = $1, updated_at = NOW()
         WHERE id = $2`,
         [text, conversation.id]
     );

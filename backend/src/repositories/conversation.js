@@ -23,7 +23,7 @@ async function find(id, user) {
         return null;
     } 
     const { rows } = await pool.query(
-        `SELECT c.id, c.last_message, c.created_at, r.name AS title
+        `SELECT c.id, c.last_message, c.created_at, c.updated_at, r.name AS title
         FROM conversation c
         INNER JOIN conversation_user u ON c.id = u.conversation_id
         INNER JOIN users r ON r.id = u.reciever_user_id
@@ -39,7 +39,7 @@ async function all(user) {
     }
 
     const { rows } = await pool.query(
-        `SELECT c.id, c.last_message, c.created_at, r.name AS title
+        `SELECT c.id, c.last_message, c.created_at, c.updated_at, r.name AS title
         FROM conversation c
         INNER JOIN conversation_user u ON c.id = u.conversation_id
         INNER JOIN users r ON r.id = u.reciever_user_id
@@ -54,7 +54,7 @@ async function create(sender, reciever) {
         var { rows } = await client.query(
             `INSERT INTO conversation (last_message)
             VALUES (NULL)
-            RETURNING id, last_message, created_at`
+            RETURNING id, last_message, created_at, updated_at`
         );
         const conversation = rows[0];
 

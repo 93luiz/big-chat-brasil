@@ -34,3 +34,8 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
 ## 16 de Outubro
 
 - API de listagem de conversas
+
+## 18 de Outubro
+
+- TODO: Colocar coluna de última atualização da conversa
+- TODO: Atualizar a última mensagem da conversa

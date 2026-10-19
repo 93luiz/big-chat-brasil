@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ConversationListItem from "./conversation_list_item";
 import { useParams } from "react-router-dom";
 
-export default function ConversationList() {
+export default function ConversationList({ onConversationSelected }) {
     const [conversations, setConversations] = useState([]);
     const { id } = useParams();
 
@@ -18,7 +18,12 @@ export default function ConversationList() {
     return (
         <div className="list-group px-2 pt-2">
             {conversations.map((conversation) => (
-                <ConversationListItem key={conversation.id} conversation={conversation} active={id == conversation.id} />
+                <ConversationListItem 
+                    key={conversation.id}
+                    conversation={conversation}
+                    active={id == conversation.id}
+                    onConversationSelected={onConversationSelected}
+                />
             ))}
         </div>
     );
