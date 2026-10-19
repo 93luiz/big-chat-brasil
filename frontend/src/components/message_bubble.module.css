@@ -1,9 +1,21 @@
+.system {
+    padding: 0px 12px;
+	position: relative;
+	border-radius: .4em;
+    display: inline-block;
+    margin-bottom: 16px;
+	border: 1px solid #98969e;
+	color: #98969e;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .bubble {
     padding: 4px 8px;
 	position: relative;
 	border-radius: .4em;
     display: inline-block;
-    margin-bottom: 2px;
+    margin-bottom: 10px;
 }
 
 .bubble.theirs {
@@ -38,4 +50,18 @@
 	border-left-color: #00aabb;
 	border-right: 0;
 	margin-right: -15px;
+}
+
+.bubble .time {
+	position: absolute;
+	bottom: -8px;
+	right: -8px;
+	font-size: 8px;
+}
+
+.system .time {
+	font-size: 8px;
+	background-color: transparent !important;
+	margin-left: 2px;
+	margin-bottom: 6px;
 }

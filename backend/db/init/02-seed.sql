@@ -25,6 +25,7 @@ BEGIN
   VALUES (conv1, joao, maria), (conv1, maria, joao);
 
   INSERT INTO message (conversation_id, user_id, type, text, created_at) VALUES
+    (conv1, joao, 'system', 'Conversa criada', NOW() - INTERVAL '3 hours'),
     (conv1, joao, 'text', 'Boa tarde, que horas podemos fazer uma reunião amanhã?', NOW() - INTERVAL '3 hours'),
     (conv1, maria, 'text', 'Às 10:00 estarei livre, pode ser?', NOW() - INTERVAL '2 hours'),
     (conv1, joao, 'text', 'Tá ótimo, até amanhã!', NOW() - INTERVAL '1 hour');
@@ -38,6 +39,7 @@ BEGIN
   VALUES (conv2, joao, solusoft), (conv2, solusoft, joao);
 
   INSERT INTO message (conversation_id, user_id, type, text, created_at) VALUES
+    (conv2, joao, 'system', 'Conversa criada', NOW() - INTERVAL '1 hour'),
     (conv2, joao, 'text', 'Boa tarde, preciso da segunda via do meu boleto', NOW() - INTERVAL '1 hour'),
     (conv2, joao, 'text', 'Boa tarde, estou mandando no seu e-mail', NOW() - INTERVAL '45 minutes'),
     (conv2, solusoft, 'text', 'Obrigado',   NOW() - INTERVAL '30 minutes');

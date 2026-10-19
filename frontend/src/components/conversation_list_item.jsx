@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { formatRelative } from "../functions/formatRelative";
 export default function ConversationListItem({ conversation, active }) {
     return (
         <Link 
@@ -11,7 +12,7 @@ export default function ConversationListItem({ conversation, active }) {
                     {conversation.title}
                 </div>
                 <small className="ms-auto text-muted">
-                    {new Date(conversation.created_at).toLocaleString()}
+                    {formatRelative(new Date(conversation.updated_at))}
                 </small>
             </div>
             <p>
