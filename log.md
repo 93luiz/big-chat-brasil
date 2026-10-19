@@ -53,3 +53,4 @@ Manterei aqui algumas anotações de decisões e progresso do desenvolvimento pa
 - Melhorias que poderiam ser feitas em próximos passos:
     - Usar data models para padronizar a manipulação dos dados
     - Encontrar uma solução mais robusta para comunicar com o banco e aposentar a escrita manual de SQL
+    - Adicionar uma variável de ambiente para definir se está rodando em produção ou dev, e limitar algumas práticas inseguras (como o JWTSECRET padrão)
