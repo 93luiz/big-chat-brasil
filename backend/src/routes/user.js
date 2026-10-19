@@ -8,10 +8,10 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.post("/", async (req, res) => {
-  const { document, document_type, password } = req.body;
+  const { name, document, document_type, password } = req.body;
 
-  if (!document || !document_type || !password) {
-    return res.status(400).json({ error: "document, document_type and password are required" });
+  if (!name || !document || !document_type || !password) {
+    return res.status(400).json({ error: "name, document, document_type and password are required" });
   }
 
   const cleanDocument = String(document).replace(/\D/g, "");
@@ -19,6 +19,7 @@ router.post("/", async (req, res) => {
 
   try {
     const user = await repository.create({
+      name: name,
       document: cleanDocument,
       documentType: document_type,
       passwordHash: passwordHash,
